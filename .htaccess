@@ -1,0 +1,21 @@
+Options -Indexes
+RewriteEngine On
+
+# No exponer archivos internos.
+<FilesMatch "^(config\.php|config\.example\.php|meligil\.sql|README\.md)$">
+    Require all denied
+</FilesMatch>
+
+RewriteRule ^login/?$ login.php [L,QSA]
+RewriteRule ^logout/?$ logout.php [L,QSA]
+RewriteRule ^dashboard/?$ index.php?page=dashboard [L,QSA]
+RewriteRule ^contactos/?$ index.php?page=contacts [L,QSA]
+RewriteRule ^productos/?$ index.php?page=products [L,QSA]
+RewriteRule ^pedidos/?$ index.php?page=orders [L,QSA]
+RewriteRule ^cotizaciones/?$ index.php?page=quotes [L,QSA]
+RewriteRule ^puntos-de-venta/?$ index.php?page=sale_points [L,QSA]
+RewriteRule ^consultas-puntos/?$ index.php?page=point_queries [L,QSA]
+RewriteRule ^conversaciones/?$ index.php?page=conversations [L,QSA]
+RewriteRule ^plantillas/?$ index.php?page=messages [L,QSA]
+RewriteRule ^configuracion/?$ index.php?page=settings [L,QSA]
+RewriteRule ^mi-cuenta/?$ index.php?page=profile [L,QSA]
