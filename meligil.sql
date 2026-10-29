@@ -109,8 +109,20 @@ CREATE TABLE IF NOT EXISTS mg_quotes (
   CONSTRAINT fk_mg_quote_contact FOREIGN KEY(contact_id) REFERENCES mg_contacts(id) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
+CREATE TABLE IF NOT EXISTS mg_sale_point_categories (
+  id INT UNSIGNED NOT NULL AUTO_INCREMENT,
+  name VARCHAR(150) NOT NULL,
+  description VARCHAR(190) NULL,
+  active TINYINT(1) NOT NULL DEFAULT 1,
+  sort_order INT NOT NULL DEFAULT 100,
+  created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  updated_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY(id), UNIQUE KEY uq_mg_sale_point_category_name(name), KEY idx_mg_sale_point_category_active(active,sort_order)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
 CREATE TABLE IF NOT EXISTS mg_sale_points (
   id INT UNSIGNED NOT NULL AUTO_INCREMENT,
+  category_id INT UNSIGNED NULL,
   name VARCHAR(180) NOT NULL,
   city VARCHAR(150) NOT NULL,
   municipality VARCHAR(150) NULL,
@@ -122,7 +134,7 @@ CREATE TABLE IF NOT EXISTS mg_sale_points (
   sort_order INT NOT NULL DEFAULT 100,
   created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
   updated_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  PRIMARY KEY(id), KEY idx_mg_point_city(city), KEY idx_mg_point_active(active)
+  PRIMARY KEY(id), KEY idx_mg_point_category(category_id), KEY idx_mg_point_city(city), KEY idx_mg_point_active(active)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 CREATE TABLE IF NOT EXISTS mg_sale_point_queries (
